@@ -9,7 +9,7 @@ export INTERNAL_IP
 cd /home/container || exit 1
 
 # Agent.jar download and verification
-AGENT_JAR="/home/agent.jar"
+AGENT_JAR="/home/container/agent.jar"
 AGENT_URL="https://service.koara.io/kg-agent/agent.jar"
 AGENT_MD5_URL="https://service.koara.io/kg-agent/agent.jar.md5"
 
