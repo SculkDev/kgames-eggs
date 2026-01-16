@@ -74,6 +74,8 @@ if ! curl -sSL -f https://github.com/mraliscoder/hytale-starter/releases/latest/
     exit 1
 fi
 
+chmod +x /home/container/hytale-starter
+
 # Download manifest and server files
 echo "Fetching manifest from CDN..."
 
