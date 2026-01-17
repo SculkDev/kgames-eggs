@@ -136,16 +136,15 @@ echo ""
 # Calculate memory
 SERVER_MEMORY_REAL=$((SERVER_MEMORY * MAXIMUM_RAM / 100))
 
-JVM_ARGUMENTS=""
-GAME_ARGUMENTS=""
+JVM_ARGUMENTS="-Xms128M -Xmx${SERVER_MEMORY_REAL}M"
+GAME_ARGUMENTS="--auth-mode $HYTALE_AUTH_MODE"
+GAME_ARGUMENTS+=" --assets Assets.zip"
+GAME_ARGUMENTS+=" --bind 0.0.0.0:$SERVER_PORT"
 
 # Add AOT cache if enabled and file exists
 if [ "$USE_AOT_CACHE" = "1" ] && [ -f "Server/HytaleServer.aot" ]; then
-    JVM_ARGUMENTS+="-XX:AOTCache=Server/HytaleServer.aot "
+    JVM_ARGUMENTS+=" -XX:AOTCache=Server/HytaleServer.aot"
 fi
-
-# Add memory settings
-JVM_ARGUMENTS+=" -Xms128M -Xmx${SERVER_MEMORY_REAL}M"
 
 # Add custom JVM flags
 [ -n "$JVM_FLAGS" ] && JVM_ARGUMENTS+=" $JVM_FLAGS"
@@ -154,11 +153,6 @@ JVM_ARGUMENTS+=" -Xms128M -Xmx${SERVER_MEMORY_REAL}M"
 [ "$HYTALE_ALLOW_OP" = "1" ] && GAME_ARGUMENTS+=" --allow-op"
 [ "$HYTALE_ACCEPT_EARLY_PLUGINS" = "1" ] && GAME_ARGUMENTS+=" --accept-early-plugins"
 [ "$DISABLE_SENTRY" = "1" ] && GAME_ARGUMENTS+=" --disable-sentry"
-
-# Add required arguments
-GAME_ARGUMENTS+=" --auth-mode $HYTALE_AUTH_MODE"
-GAME_ARGUMENTS+=" --assets Assets.zip"
-GAME_ARGUMENTS+=" --bind 0.0.0.0:$SERVER_PORT"
 
 STARTUP_CMD="./hytale-starter -jar Server/HytaleServer.jar -jvm-arguments \"${JVM_ARGUMENTS}\" -game-arguments \"${GAME_ARGUMENTS}\" -autorestart false"
 
