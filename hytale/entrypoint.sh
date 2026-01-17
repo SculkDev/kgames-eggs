@@ -22,6 +22,7 @@ HYTALE_ALLOW_OP=${HYTALE_ALLOW_OP:-"0"}
 HYTALE_AUTH_MODE=${HYTALE_AUTH_MODE:-"authenticated"}
 HYTALE_ACCEPT_EARLY_PLUGINS=${HYTALE_ACCEPT_EARLY_PLUGINS:-"0"}
 DISABLE_SENTRY=${DISABLE_SENTRY:-"0"}
+ENABLE_BACKUPS=${ENABLE_BACKUPS:-"0"}
 
 # Create Server directory if it doesn't exist
 mkdir -p Server
@@ -133,6 +134,10 @@ fi
 echo "All files downloaded successfully"
 echo ""
 
+if [ "$ENABLE_BACKUPS" = "1" ]; then
+    mkdir -p backups/
+fi
+
 # Calculate memory
 SERVER_MEMORY_REAL=$((SERVER_MEMORY * MAXIMUM_RAM / 100))
 
@@ -153,6 +158,7 @@ fi
 [ "$HYTALE_ALLOW_OP" = "1" ] && GAME_ARGUMENTS+=" --allow-op"
 [ "$HYTALE_ACCEPT_EARLY_PLUGINS" = "1" ] && GAME_ARGUMENTS+=" --accept-early-plugins"
 [ "$DISABLE_SENTRY" = "1" ] && GAME_ARGUMENTS+=" --disable-sentry"
+[ "$ENABLE_BACKUPS" = "1" ] && GAME_ARGUMENTS+=" --backup --backup-dir ./backups"
 
 echo "Starting Hytale Server v$LATEST_VERSION"
 echo "./hytale-starter -jar Server/HytaleServer.jar -jvm-arguments \"${JVM_ARGUMENTS}\" -game-arguments \"${GAME_ARGUMENTS}\" -autorestart false"
