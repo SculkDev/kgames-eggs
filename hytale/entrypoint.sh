@@ -154,11 +154,12 @@ fi
 [ "$HYTALE_ACCEPT_EARLY_PLUGINS" = "1" ] && GAME_ARGUMENTS+=" --accept-early-plugins"
 [ "$DISABLE_SENTRY" = "1" ] && GAME_ARGUMENTS+=" --disable-sentry"
 
-STARTUP_CMD="./hytale-starter -jar Server/HytaleServer.jar -jvm-arguments \"${JVM_ARGUMENTS}\" -game-arguments \"${GAME_ARGUMENTS}\" -autorestart false"
-
 echo "Starting Hytale Server v$LATEST_VERSION"
-echo "$STARTUP_CMD"
+echo "./hytale-starter -jar Server/HytaleServer.jar -jvm-arguments \"${JVM_ARGUMENTS}\" -game-arguments \"${GAME_ARGUMENTS}\" -autorestart false"
 echo ""
 
-
-exec $STARTUP_CMD
+exec ./hytale-starter \
+    -jar Server/HytaleServer.jar \
+    -jvm-arguments "$JVM_ARGUMENTS" \
+    -game-arguments "$GAME_ARGUMENTS" \
+    -autorestart false
