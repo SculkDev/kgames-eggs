@@ -150,9 +150,6 @@ JVM_ARGUMENTS+=" -Xms128M -Xmx${SERVER_MEMORY_REAL}M"
 # Add custom JVM flags
 [ -n "$JVM_FLAGS" ] && JVM_ARGUMENTS+=" $JVM_FLAGS"
 
-# Add jar
-#STARTUP_CMD+=" -jar Server/HytaleServer.jar"
-
 # Add server arguments
 [ "$HYTALE_ALLOW_OP" = "1" ] && GAME_ARGUMENTS+=" --allow-op"
 [ "$HYTALE_ACCEPT_EARLY_PLUGINS" = "1" ] && GAME_ARGUMENTS+=" --accept-early-plugins"
@@ -163,7 +160,7 @@ GAME_ARGUMENTS+=" --auth-mode $HYTALE_AUTH_MODE"
 GAME_ARGUMENTS+=" --assets Assets.zip"
 GAME_ARGUMENTS+=" --bind 0.0.0.0:$SERVER_PORT"
 
-STARTUP_CMD="./hytale-starter --jar Server/HytaleServer.jar --jvm_arguments=\"${JVM_ARGUMENTS}\" --game-arguments=\"${GAME_ARGUMENTS}\" --autorestart=false"
+STARTUP_CMD="./hytale-starter -jar Server/HytaleServer.jar -jvm_arguments \"${JVM_ARGUMENTS}\" -game-arguments \"${GAME_ARGUMENTS}\" -autorestart false"
 
 echo "Starting Hytale Server v$LATEST_VERSION"
 echo "$STARTUP_CMD"
