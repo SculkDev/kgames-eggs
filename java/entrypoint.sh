@@ -10,8 +10,8 @@ cd /home/container || exit 1
 
 # Agent.jar download and verification
 AGENT_JAR="/home/container/agent.jar"
-AGENT_URL="https://service.koara.io/kg-agent/agent.jar"
-AGENT_MD5_URL="https://service.koara.io/kg-agent/agent.jar.md5"
+AGENT_URL="https://static.koara.io/kgames/agent.jar"
+AGENT_MD5_URL="https://static.koara.io/kgames/agent.jar.md5"
 
 download_agent() {
     if curl -fsSL -o "$AGENT_JAR" "$AGENT_URL"; then
