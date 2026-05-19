@@ -39,9 +39,9 @@ verify_agent() {
 }
 
 # Check if agent.jar exists and verify it
-if ! verify_agent; then
-    download_agent || exit 1
-fi
+#if ! verify_agent; then
+#    download_agent || exit 1
+#fi
 
 printf "\033[1m\033[33mcontainer@koaragames~ \033[0mjava -version\n"
 java -version
