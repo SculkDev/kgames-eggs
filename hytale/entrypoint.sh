@@ -151,7 +151,7 @@ if [ "$USE_AOT_CACHE" = "1" ] && [ -f "Server/HytaleServer.aot" ]; then
     JVM_ARGUMENTS+=" -XX:AOTCache=Server/HytaleServer.aot"
 fi
 
-JVM_ARGUMENTS+="-XX:+UnlockDiagnosticVMOptions -XX:-UseBASE64Intrinsics"
+JVM_ARGUMENTS+=" -XX:+UnlockDiagnosticVMOptions -XX:-UseBASE64Intrinsics"
 
 # Add custom JVM flags
 [ -n "$JVM_FLAGS" ] && JVM_ARGUMENTS+=" $JVM_FLAGS"
