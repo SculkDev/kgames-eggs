@@ -46,7 +46,7 @@ verify_agent() {
 printf "\033[1m\033[33mcontainer@koaragames~ \033[0mjava -version\n"
 java -version
 
-PARSED=$(echo "${STARTUP}" | sed -e 's/{{/${/g' -e 's/}}/}/g' | eval echo "$(cat -)")
+PARSED=$(echo "${STARTUP}" | sed -e 's/{{/${/g' -e 's/}}/}/g' | eval echo "$(cat -)" | sed 's/\bjava\b/& -XX:-UseBASE64Intrinsics/')
 
 printf "\033[1m\033[33mcontainer@koaragames~ \033[0m%s\n" "$PARSED"
 exec env ${PARSED}
