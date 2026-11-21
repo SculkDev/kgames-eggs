@@ -25,11 +25,10 @@ verify_agent() {
     if [ ! -f "$AGENT_JAR" ]; then
         return 1
     fi
-        
+
     REMOTE_MD5=$(curl -fsSL "$AGENT_MD5_URL" | awk '{print $1}')
-    
     LOCAL_MD5=$(md5sum "$AGENT_JAR" | awk '{print $1}')
-    
+
     if [ "$LOCAL_MD5" = "$REMOTE_MD5" ]; then
         return 0
     else
@@ -46,7 +45,12 @@ verify_agent() {
 printf "\033[1m\033[33mcontainer@koaragames~ \033[0mjava -version\n"
 java -version
 
-PARSED=$(echo "${STARTUP}" | sed -e 's/{{/${/g' -e 's/}}/}/g' | eval echo "$(cat -)" | sed 's/\bjava\b/& -XX:+UnlockDiagnosticVMOptions -XX:-UseBASE64Intrinsics/')
+PARSED=$(echo "${STARTUP}" | sed -e 's/{{/${/g' -e 's/}}/}/g' | eval echo "$(cat -)")
+
+BASE64_FLAGS=(-XX:+UnlockDiagnosticVMOptions -XX:-UseBASE64Intrinsics)
+if java "${BASE64_FLAGS[@]}" -version >/dev/null 2>&1; then
+    PARSED=$(sed "s/\bjava\b/& ${BASE64_FLAGS[*]}/" <<< "$PARSED")
+fi
 
 printf "\033[1m\033[33mcontainer@koaragames~ \033[0m%s\n" "$PARSED"
 exec env ${PARSED}
